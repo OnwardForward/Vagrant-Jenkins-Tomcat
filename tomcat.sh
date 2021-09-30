@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 
 #Script to setup Apache Tomcat on centOS/RHEL 6.x and 7.x
@@ -24,13 +24,18 @@ mv apache* tomcat
 chmod +x /opt/tomcat/bin/startup.sh
 chmod +x /opt/tomcat/bin/shutdown.sh
 
-ln -s /opt/tomcat/bin/startup.sh /usr/local/bin/tomcatup
-ln -s /opt/tomcat/bin/shutdown.sh /usr/local/bin/tomcatdown
+rm -rf /usr/local/bin/tomcatup || ln -s /opt/tomcat/bin/startup.sh /usr/local/bin/tomcatup
+rm /usr/local/bin/tomcatdown || ln -s /opt/tomcat/bin/shutdown.sh /usr/local/bin/tomcatdown
 
 echo -e "\nStarting tomcat\n"
 sleep 4
 
 tomcatup
+
+if [ ${?} -ne 0 ]
+then
+/opt/tomcat/bin/startup.sh
+fi
 
 echo -e "\n Installing ip tables package...\n"
 
