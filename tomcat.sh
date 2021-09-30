@@ -5,6 +5,7 @@
 
 #Author Serge  Aug 2017
 #Modify: sept 2019
+#Modified sept 2021
 
 
 echo -e "\nInstalling tomcat ..\n"
@@ -12,6 +13,7 @@ echo -e "\nInstalling tomcat ..\n"
 sleep 4
 
 cd /opt
+yum install java-1.8* wget vim epel-release -y
 
 wget http://mirrors.ocf.berkeley.edu/apache/tomcat/tomcat-8/v8.5.71/bin/apache-tomcat-8.5.71.tar.gz
 tar -xzvf apache-tomcat-8.5.71.tar.gz
