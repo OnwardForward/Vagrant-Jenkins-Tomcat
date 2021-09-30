@@ -13,6 +13,7 @@ echo -e "\nInstalling tomcat ..\n"
 sleep 4
 
 cd /opt
+rm -rf /opt/apache-tomcat-*
 yum install java-1.8* wget vim epel-release -y
 
 wget http://mirrors.ocf.berkeley.edu/apache/tomcat/tomcat-8/v8.5.71/bin/apache-tomcat-8.5.71.tar.gz
@@ -24,8 +25,16 @@ mv apache* tomcat
 chmod +x /opt/tomcat/bin/startup.sh
 chmod +x /opt/tomcat/bin/shutdown.sh
 
-rm -rf /usr/local/bin/tomcatup || ln -s /opt/tomcat/bin/startup.sh /usr/local/bin/tomcatup
-rm /usr/local/bin/tomcatdown || ln -s /opt/tomcat/bin/shutdown.sh /usr/local/bin/tomcatdown
+if  [ -f /usr/local/bin/tomcatup ] 
+then
+rm -rf  /usr/local/bin/tomcatup
+ ln -s /opt/tomcat/bin/startup.sh /usr/local/bin/tomcatup
+ elif
+ [ -f /usr/local/bin/tomcatup ] 
+then
+rm -rf  /usr/local/bin/tomcatdown
+ ln -s /opt/tomcat/bin/shutdown.sh /usr/local/bin/tomcatdown
+fi
 
 echo -e "\nStarting tomcat\n"
 sleep 4
